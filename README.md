@@ -9,7 +9,7 @@ In the Julia REPL run
 Pkg.clone("git://github.com/daviddelaat/MultiPoly.jl.git")
 ```
 
-## The Mpoly type
+## The MPoly type
 
 Multivariate polynomials are stored in the type
 ```julia
@@ -18,6 +18,7 @@ immutable MPoly{T}
     vars::Vector{Symbol}
 end
 ```
+Here each item in the dictionary `terms` corresponds to a term in the polynomial, where the key represents the monomial powers and the value the coefficient of the monomial. Each of the keys in `terms` should be a vector of integers whose length equals `length(vars)`.
 
 ## Constructing polynomials
 
@@ -44,4 +45,24 @@ MPoly{Float64}([[0,0] => 1.0, [2,0] => 1.0, [1,3] => 2.0], [:x, :y])
 
 ## Polynomial arithmetic
 
-The usual ring arithmetic is supported where it is not necessary for polynomials to have the same variables or coefficient type.
+The usual ring arithmetic is supported and MutliPoly will automatically deal with polynomials in different variables or having a different coefficient type. Examples:
+```julia
+julia> using MultiPoly
+
+julia> x, y = generators(MPoly{Float64}, :x, :y)
+2-element Array{MPoly{Float64},1}:
+ MPoly{Float64}(x)
+ MPoly{Float64}(y)
+
+julia> z = generator(MPoly{Int}, :z)
+MPoly{Int64}(z)
+
+julia> x+z
+MPoly{Float64}(z + x)
+
+julia> vars(x+z)
+3-element Array{Symbol,1}:
+ :x
+ :y
+ :z
+```
