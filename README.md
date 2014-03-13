@@ -26,10 +26,7 @@ For constructing polynomials you can use the generators of the polynomial ring:
 ```julia
 julia> using MultiPoly
 
-julia> x, y = generators(MPoly{Float64}, :x, :y)
-2-element Array{MPoly{Float64},1}:
- MPoly{Float64}(x)
- MPoly{Float64}(y)
+julia> x, y = generators(MPoly{Float64}, :x, :y);
 
 julia> p = (x+y)^3
 MPoly{Float64}(3.0x^2*y + x^3 + 3.0x*y^2 + y^3)
