@@ -32,7 +32,7 @@ julia> x, y = generators(MPoly{Float64}, :x, :y)
  MPoly{Float64}(y)
 
 julia> p = (x+y)^3
-MPoly{Float64}(3.0x^2y + x^3 + 3.0xy^2 + y^3)
+MPoly{Float64}(3.0x^2*y + x^3 + 3.0x*y^2 + y^3)
 ```
 For the zero and constant one polynomials use
 ```julia

@@ -3,4 +3,4 @@ using MultiPoly
 
 include("mpoly.jl")
 include("mpolyarithmetic.jl")
-
+include("mpolyprinting.jl")

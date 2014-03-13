@@ -8,12 +8,13 @@ end
 function print{T}(io::IO, p::MPoly{T})
 
     function printmonomial(io::IO, m, vars)
-        first = false
+        first = true
         for i = 1:length(m)        
             if m[i] >= 1
                 if first
-                    print(io, '*')
                     first = false
+                else
+                    print(io, '*')
                 end
                 print(io, vars[i])
                 if m[i] >= 2
