@@ -23,8 +23,8 @@ Here each item in the dictionary `terms` corresponds to a term in the polynomial
 ## Constructing polynomials
 
 For constructing polynomials you can use the generators of the polynomial ring:
-```julia   
-julia> using MultiPoly                                                                                                                                       
+```julia
+julia> using MultiPoly
 
 julia> x, y = generators(MPoly{Float64}, :x, :y)
 2-element Array{MPoly{Float64},1}:
