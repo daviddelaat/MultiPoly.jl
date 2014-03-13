@@ -53,10 +53,7 @@ The usual ring arithmetic is supported and MutliPoly will automatically deal wit
 ```julia
 julia> using MultiPoly
 
-julia> x, y = generators(MPoly{Float64}, :x, :y)
-2-element Array{MPoly{Float64},1}:
- MPoly{Float64}(x)
- MPoly{Float64}(y)
+julia> x, y = generators(MPoly{Float64}, :x, :y);
 
 julia> z = generator(MPoly{Int}, :z)
 MPoly{Int64}(z)
