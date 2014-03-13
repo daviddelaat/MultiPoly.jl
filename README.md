@@ -24,8 +24,15 @@ Here each item in the dictionary `terms` corresponds to a term in the polynomial
 
 For constructing polynomials you can use the generators of the polynomial ring:
 ```julia   
-x, y = generators(MPoly{Float64}, :x, :y)
-p = (x+y)^3
+julia> using MultiPoly                                                                                                                                       
+
+julia> x, y = generators(MPoly{Float64}, :x, :y)
+2-element Array{MPoly{Float64},1}:
+ MPoly{Float64}(x)
+ MPoly{Float64}(y)
+
+julia> p = (x+y)^3
+MPoly{Float64}(3.0x^2y + x^3 + 3.0xy^2 + y^3)
 ```
 For the zero and constant one polynomials use
 ```julia
