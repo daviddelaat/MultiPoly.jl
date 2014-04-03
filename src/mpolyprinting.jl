@@ -5,26 +5,26 @@ function show(io::IO, p::MPoly)
     print(io, ')')
 end
 
-function print{T}(io::IO, p::MPoly{T})
-
-    function printmonomial(io::IO, m, vars)
-        first = true
-        for i = 1:length(m)        
-            if m[i] >= 1
-                if first
-                    first = false
-                else
-                    print(io, '*')
-                end
-                print(io, vars[i])
-                if m[i] >= 2
-                    print(io, '^')
-                    print(io, m[i])
-                end
+function printmonomial(io::IO, m, vars)
+    first = true
+    for i = 1:length(m)        
+        if m[i] >= 1
+            if first
+                first = false
+            else
+                print(io, '*')
+            end
+            print(io, vars[i])
+            if m[i] >= 2
+                print(io, '^')
+                print(io, m[i])
             end
         end
     end
+end
 
+
+function print{T}(io::IO, p::MPoly{T})
     first = true
     for (m, c) in p
         if first
