@@ -6,7 +6,7 @@ This package provides support for working with sparse multivariate polynomials i
 
 In the Julia REPL run
 ```julia
-Pkg.clone("git://github.com/daviddelaat/MultiPoly.jl.git")
+Pkg.clone("https://github.com/daviddelaat/MultiPoly.jl")
 ```
 
 ## The MPoly type
@@ -14,7 +14,7 @@ Pkg.clone("git://github.com/daviddelaat/MultiPoly.jl.git")
 Multivariate polynomials are stored in the type
 ```julia
 immutable MPoly{T}
-    terms::Dict{Vector{Int},T}
+    terms::OrderedDict{Vector{Int},T}
     vars::Vector{Symbol}
 end
 ```
@@ -29,7 +29,7 @@ julia> using MultiPoly
 julia> x, y = generators(MPoly{Float64}, :x, :y);
 
 julia> p = (x+y)^3
-MPoly{Float64}(3.0x^2*y + x^3 + 3.0x*y^2 + y^3)
+MultiPoly.MPoly{Float64}(x^3 + 3.0x^2*y + 3.0x*y^2 + y^3)
 ```
 For the zero and constant one polynomials use
 ```julia
@@ -44,7 +44,10 @@ MPoly{Float64}(terms, vars)
 ```
 For example, to construct the polynomial `1 + x^2 + 2x*y^3` use
 ```julia
-MPoly{Float64}([[0,0] => 1.0, [2,0] => 1.0, [1,3] => 2.0], [:x, :y])
+julia> using MultiPoly, DataStructures
+
+julia> MPoly{Float64}(OrderedDict([0,0] => 1.0, [2,0] => 1.0, [1,3] => 2.0), [:x, :y])
+MultiPoly.MPoly{Float64}(1.0 + x^2 + 2.0x*y^3)
 ```
 
 ## Polynomial arithmetic
@@ -59,7 +62,7 @@ julia> z = generator(MPoly{Int}, :z)
 MPoly{Int64}(z)
 
 julia> x+z
-MPoly{Float64}(z + x)
+MPoly{Float64}(x + z)
 
 julia> vars(x+z)
 3-element Array{Symbol,1}:
