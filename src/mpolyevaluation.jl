@@ -1,7 +1,7 @@
 function evaluate{T}(p::MPoly{T}, es...)
-    r = zero(MPoly{T})
+    r = zero(T)
     for (m, c) in p
-        t = c * one(MPoly{T})
+        t = c
         for i = 1:length(m)
             t *= es[i]^m[i]
         end
