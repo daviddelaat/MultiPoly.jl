@@ -48,7 +48,7 @@ getindex(p::MPoly, m::Int...) = p[[m...]]
 
 function setindex!{T}(p::MPoly{T}, v, m::Int...)
     v = convert(T, v)
-    if method_exists(isapprox, (T,T)) && isapprox(v, zero(T), atol=0.000001)
+    if method_exists(isapprox, (T,T)) && isapprox(v, zero(T))
         delete!(terms(p), [m...])
     else
         terms(p)[[m...]] = v
@@ -76,12 +76,12 @@ end
 
 function ==(p::MPoly, q::MPoly)
     for (m, c) in p
-        if !isapprox(q[m], c, atol=0.000001)
+        if !isapprox(q[m], c)
             return false
         end
     end
     for (m, c) in q
-        if !isapprox(p[m], c, atol=0.000001)
+        if !isapprox(p[m], c)
             return false
         end
     end
