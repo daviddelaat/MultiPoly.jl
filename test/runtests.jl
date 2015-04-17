@@ -1,6 +1,7 @@
 using Base.Test
-using MultiPoly 
+using MultiPoly
 
+include("mpolycalculus.jl")
 include("mpoly.jl")
 include("mpolyarithmetic.jl")
 include("mpolyprinting.jl")
