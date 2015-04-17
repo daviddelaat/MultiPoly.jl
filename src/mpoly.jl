@@ -25,6 +25,12 @@ end
 generator{T}(::Type{MPoly{T}}, var::Symbol) =
      MPoly{T}(OrderedDict([1] => one(T)), [var])
 
+call{T}(::Type{MPoly{T}}, var::Symbol) = 
+     MPoly{T}(OrderedDict([1] => one(T)), [var])
+
+call(::Type{MPoly}, var::Symbol) = 
+     MPoly{Float64}(var)
+
 promote_rule{T,U}(::Type{MPoly{T}}, ::Type{MPoly{U}}) = MPoly{promote_type(T, U)}
 promote_rule{T,U}(::Type{MPoly{T}}, ::Type{U}) = MPoly{promote_type(T, U)}
 
