@@ -1,10 +1,12 @@
 module MultiPoly
 
+using DataStructures
+
 export
     MPoly, terms, vars, nvars, generators, generator, monomials, deg,
     PolyUnion, newexps, oldexps,
     harmonicpolynomialdim, laplaceharmonicpol,
-    evaluate, diff, integrate
+    evaluate, evaluate_basis, diff, integrate
 
 import Base: zero, one,
     show, print, length, endof, getindex, setindex!, copy, promote_rule, convert, start, next, done, eltype,
