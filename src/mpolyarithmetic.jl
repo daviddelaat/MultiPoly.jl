@@ -95,7 +95,7 @@ end
 
 
 function /{T,U}(p::MPoly{T}, s::U)
-    r = zero(MPoly{promote_type(T,U)})
+    r = zero(MPoly{promote_type(T,U)}, vars=vars(p))
     for (m, c) in p
         r[m] = c/s
     end
@@ -121,7 +121,7 @@ function real{T<:Real}(p::MPoly{Complex{T}})
 end
 
 real{T<:Real}(p::MPoly{T}) = p
-    
+
 function imag{T<:Real}(p::MPoly{Complex{T}})
     r = zero(MPoly{T}, vars=vars(p))
     for (m, c) in p
