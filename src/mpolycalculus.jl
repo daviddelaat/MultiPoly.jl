@@ -1,7 +1,6 @@
 function diff{T}(p::MPoly{T}, symbol::Symbol, n::Int=1)
     if !(symbol in vars(p))
-        # Should we just return zero(p) here?
-        throw(UndefVarError(:symbol))
+        return zero(p)
     end
 
     dp = zero(p)
@@ -20,8 +19,7 @@ end
 
 function integrate{T}(p::MPoly{T}, symbol::Symbol, n::Int=1)
     if !(symbol in vars(p))
-        # Should we just return something like p * symbol here?
-        throw(UndefVarError(:symbol))
+        return MPoly{T}(symbol)^n * p / factorial(n)
     end
     dp = zero(p)
     idx = find(vars(p) .== symbol)[1]
