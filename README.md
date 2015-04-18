@@ -70,3 +70,32 @@ julia> vars(x+z)
  :y
  :z
 ```
+
+## Evaluating a polynomial
+
+To evaluate a polynomial *P(x,y, ...)* at a point *(x0, y0, ...)* the `evaluate` function is used. Example:
+```julia
+julia> p = (x+x*y)^2
+MultiPoly.MPoly{Float64}(x^2 + 2.0x^2*y + x^2*y^2)
+
+julia> evaluate(p, 3.0, 2.0)
+81.0
+```
+
+## Calculus
+
+MultiPoly supports integration and differentiation. Currently the integrating constant is set to 0. Examples:
+```julia
+julia> p = x^4 + y^4
+MultiPoly.MPoly{Float64}(x^4 + y^4)
+
+julia> diff(p, :x)
+MultiPoly.MPoly{Float64}(4.0x^3)
+
+julia> diff(p, :y, 3)
+MultiPoly.MPoly{Float64}(24.0y)
+
+julia> integrate(p, :x, 2)
+MultiPoly.MPoly{Float64}(0.03333333333333333x^6 + 0.5x^2*y^4)
+
+```
