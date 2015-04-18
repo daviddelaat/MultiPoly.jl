@@ -19,7 +19,7 @@ end
 
 function integrate{T}(p::MPoly{T}, symbol::Symbol, n::Int=1)
     if !(symbol in vars(p))
-        return MPoly{T}(symbol)^n * p / factorial(n)
+        return (MPoly{T}(symbol)^n * p) / factorial(n)
     end
     dp = zero(p)
     idx = find(vars(p) .== symbol)[1]
