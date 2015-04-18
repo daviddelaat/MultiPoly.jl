@@ -130,4 +130,4 @@ function imag{T<:Real}(p::MPoly{Complex{T}})
     r
 end
 
-imag{T<:Real}(p::MPoly{T}) = p
+imag{T<:Real}(p::MPoly{T}) = zero(p)
