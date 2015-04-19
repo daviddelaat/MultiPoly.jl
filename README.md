@@ -6,7 +6,7 @@ This package provides support for working with sparse multivariate polynomials i
 
 In the Julia REPL run
 ```julia
-Pkg.clone("https://github.com/daviddelaat/MultiPoly.jl")
+Pkg.add("MultiPoly")
 ```
 
 ## The MPoly type
