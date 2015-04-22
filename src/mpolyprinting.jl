@@ -23,7 +23,6 @@ function printmonomial(io::IO, m, vars)
     end
 end
 
-
 function print{T}(io::IO, p::MPoly{T})
     first = true
     for (m, c) in p
@@ -66,3 +65,5 @@ function print{T}(io::IO, p::MPoly{T})
         print(io, zero(T))
     end
 end
+
+showcompact(io::IO, p::MPoly) = print(io, p)

@@ -9,7 +9,7 @@ export
     evaluate, evaluate_basis, diff, integrate
 
 import Base: zero, one,
-    show, print, length, endof, getindex, setindex!, copy, promote_rule, convert, start, next, done, eltype,
+    show, showcompact, print, length, endof, getindex, setindex!, copy, promote_rule, convert, start, next, done, eltype,
     *, /, //, -, +, ==, divrem, conj, rem, real, imag, diff
 
 include("mpoly.jl")
