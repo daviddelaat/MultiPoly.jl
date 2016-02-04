@@ -11,7 +11,7 @@ export
 
 import Base: zero, one,
     show, showcompact, print, length, endof, getindex, setindex!, copy, promote_rule, convert, start, next, done, eltype,
-    *, /, //, -, +, ==, divrem, conj, rem, real, imag, diff
+    *, /, //, -, +, ==, ^, divrem, conj, rem, real, imag, diff
 
 include("mpoly.jl")
 include("mpolyarithmetic.jl")
