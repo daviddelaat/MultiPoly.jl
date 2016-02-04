@@ -1,6 +1,7 @@
 module MultiPoly
 
 using DataStructures
+using Combinatorics
 
 export
     MPoly, terms, vars, nvars, generators, generator, monomials, deg,
@@ -10,7 +11,7 @@ export
 
 import Base: zero, one,
     show, showcompact, print, length, endof, getindex, setindex!, copy, promote_rule, convert, start, next, done, eltype,
-    *, /, //, -, +, ==, divrem, conj, rem, real, imag, diff
+    *, /, //, -, +, ==, ^, divrem, conj, rem, real, imag, diff
 
 include("mpoly.jl")
 include("mpolyarithmetic.jl")
