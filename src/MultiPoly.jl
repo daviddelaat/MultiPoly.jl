@@ -1,6 +1,7 @@
 module MultiPoly
 
 using DataStructures
+using Combinatorics
 
 export
     MPoly, terms, vars, nvars, generators, generator, monomials, deg,
