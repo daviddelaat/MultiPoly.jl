@@ -1,10 +1,16 @@
 function diff{T}(p::MPoly{T}, symbol::Symbol, n::Int=1)
-    if !(symbol in vars(p))
+    idx = 0
+    for (i, var) in enumerate(vars(p))
+        if var == symbol
+            idx = i
+            break
+        end
+    end
+    if idx == 0 # symbol was not found
         return zero(p)
     end
 
     dp = zero(p)
-    idx = find(vars(p) .== symbol)[1]
 
     for (m, c) in p
         if m[idx] - n < 0
