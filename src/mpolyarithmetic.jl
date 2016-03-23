@@ -80,10 +80,22 @@ end
 
 *(p::MPoly, s) = s * p
 
+function Base.inv(p)
+    q = copy(p)
+    if length(q.terms) != 1
+        throw(ArgumentError("Can only take inverse of a monomial"))
+    end
+    term = collect(keys(q.terms))[1]
+    val = collect(values(q.terms))[1]
+    delete!(q.terms, term)
+    q[-term] = val
+    q
+end
 
 function ^(p::MPoly, power::Integer)
-    @assert power >= 0
-    if power == 0
+    if power < 0
+        return inv(p)^abs(power)
+    elseif power == 0
         return one(p)
     elseif power == 1
         return p

@@ -7,17 +7,17 @@ end
 
 function printmonomial(io::IO, m, vars)
     first = true
-    for i = 1:length(m)        
-        if m[i] >= 1
+    for i = 1:length(m)
+        if m[i] >= 1 || m[i] <= -1
             if first
                 first = false
             else
                 print(io, '*')
             end
             print(io, vars[i])
-            if m[i] >= 2
+            if m[i] >= 2 || m[i] <= -1
                 print(io, '^')
-                print(io, m[i])
+                print(io, m[i] > 0 ? m[i] : "($(m[i]))")
             end
         end
     end
