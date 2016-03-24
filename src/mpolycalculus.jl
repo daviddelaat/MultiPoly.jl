@@ -1,3 +1,14 @@
+## from combinatorics.jl. Allows for negative values
+function _factorial{T <: Integer}(n::T, k::T)
+    k > n && throw(DomainError())
+    k == n && return one(T)
+    f = one(T)
+    for i in (k+1):n
+        f = Base.checked_mul(f,i)
+    end
+    return f
+end
+
 function diff{T}(p::MPoly{T}, symbol::Symbol, n::Int=1)
     idx = 0
     for (i, var) in enumerate(vars(p))
@@ -13,12 +24,9 @@ function diff{T}(p::MPoly{T}, symbol::Symbol, n::Int=1)
     dp = zero(p)
 
     for (m, c) in p
-        if m[idx] - n < 0
-            continue
-        end
         m2 = copy(m)
         m2[idx] = m[idx] - n
-        dp[m2] = p[m] * factorial(m[idx], m[idx] - n)
+        dp[m2] = p[m] * _factorial(m[idx], m2[idx])
     end
     return dp
 end
@@ -33,7 +41,11 @@ function integrate{T}(p::MPoly{T}, symbol::Symbol, n::Int=1)
     for (m, c) in p
         m2 = copy(m)
         m2[idx] = m[idx] + n
-        dp[m2] = p[m] * 1/(factorial(m[idx] + n, m[idx]))
+        if m[idx] + 1 <= 0 <= m2[idx]
+            throw(ArgumentError("can't integrate $n times in $(symbol) as it would involve a -1 power requiring a log term"))
+        end
+        c =  _factorial(m2[idx], m[idx])
+        dp[m2] = p[m] * 1 / c
     end
     return dp
 end

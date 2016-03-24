@@ -7,3 +7,6 @@ x, y = generators(MPoly{Float64}, :x, :y)
 @test x[0,1] == 0.0
 @test eltype(x + im) == Complex{Float64}
 
+@test  (x^(-1))[-1,0] == 1.0
+@test_throws ArgumentError (x*y + x)^(-1) 
+

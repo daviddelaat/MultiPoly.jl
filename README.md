@@ -50,9 +50,17 @@ julia> MPoly{Float64}(OrderedDict([0,0] => 1.0, [2,0] => 1.0, [1,3] => 2.0), [:x
 MultiPoly.MPoly{Float64}(1.0 + x^2 + 2.0x*y^3)
 ```
 
+Laurent polynomials may be constructed too:
+```julia
+x^1 * y^2 + x^1 * y^(-2) + x^(-1) * y^2 + x^(-1) * y^(-2)
+```
+
 ## Polynomial arithmetic
 
-The usual ring arithmetic is supported and MutliPoly will automatically deal with polynomials in different variables or having a different coefficient type. Examples:
+The usual ring arithmetic is supported and MutliPoly will
+automatically deal with polynomials in different variables or having a
+different coefficient type. Examples:
+
 ```julia
 julia> using MultiPoly
 
@@ -98,4 +106,14 @@ MultiPoly.MPoly{Float64}(24.0y)
 julia> integrate(p, :x, 2)
 MultiPoly.MPoly{Float64}(0.03333333333333333x^6 + 0.5x^2*y^4)
 
+```
+
+Integrations which would involve integrating a term with a -1 power
+raise an error. This example can be intergrated once, but not twice, in
+`:x` and can't be integrated in `:y`:
+
+```julia
+julia> q = x^(-2) * y^(-1);
+julia> integrate(q, :y)  
+ERROR: ArgumentError: can't integrate 1 times in y as it would involve a -1 power requiring a log term
 ```
