@@ -25,10 +25,10 @@ end
 generator{T}(::Type{MPoly{T}}, var::Symbol) =
      MPoly{T}(OrderedDict([1] => one(T)), [var])
 
-@compat (::Type{MPoly{T}}){T}(var::Symbol) = 
+@compat (::Type{MPoly{T}}){T}(var::Symbol) =
      MPoly{T}(OrderedDict([1] => one(T)), [var])
 
-@compat (::Type{MPoly})(var::Symbol) = 
+@compat (::Type{MPoly})(var::Symbol) =
      MPoly{Float64}(var)
 
 promote_rule{T,U}(::Type{MPoly{T}}, ::Type{MPoly{U}}) = MPoly{promote_type(T, U)}
