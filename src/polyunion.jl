@@ -6,7 +6,7 @@ end
 
 function PolyUnion(ps)
     newvars = isempty(ps) ? [] : union([vars(p) for p in ps]...)
-    mat = Array(Int, length(newvars), length(ps))
+    mat = Array{Int}(length(newvars), length(ps))
     for pindex = 1:length(ps)
         for i = 1:length(newvars)
             mat[i, pindex] = findfirst(vars(ps[pindex]), newvars[i])
