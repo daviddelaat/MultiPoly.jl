@@ -2,7 +2,7 @@
 
 This package provides support for working with sparse multivariate polynomials in Julia. 
 
-Currently this package is not maintained. See [MultivariatePolynomials.jl](https://github.com/blegat/MultivariatePolynomials.jl) for another Julia package for multivariate polynomials or in the future [Nemo.jl](https://github.com/wbhart/Nemo.jl).
+This package is superseded by [MultivariatePolynomials.jl](https://github.com/blegat/MultivariatePolynomials.jl) and is no longer maintained.
 
 ## Installation
 
