@@ -1,5 +1,5 @@
 ## from combinatorics.jl. Allows for negative values
-function _factorial{T <: Integer}(n::T, k::T)
+function _factorial(n::T, k::T) where {T <: Integer}
     k > n && throw(DomainError())
     k == n && return one(T)
     f = one(T)
@@ -9,7 +9,7 @@ function _factorial{T <: Integer}(n::T, k::T)
     return f
 end
 
-function diff{T}(p::MPoly{T}, symbol::Symbol, n::Int=1)
+function diff(p::MPoly{T}, symbol::Symbol, n::Int=1) where {T}
     idx = 0
     for (i, var) in enumerate(vars(p))
         if var == symbol
@@ -31,12 +31,12 @@ function diff{T}(p::MPoly{T}, symbol::Symbol, n::Int=1)
     return dp
 end
 
-function integrate{T}(p::MPoly{T}, symbol::Symbol, n::Int=1)
+function integrate(p::MPoly{T}, symbol::Symbol, n::Int=1) where {T}
     if !(symbol in vars(p))
         return (MPoly{T}(symbol)^n * p) / factorial(n)
     end
     dp = zero(p)
-    idx = find(vars(p) .== symbol)[1]
+    idx = findfirst(isequal(symbol), vars(p))
 
     for (m, c) in p
         m2 = copy(m)

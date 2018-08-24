@@ -21,7 +21,7 @@ function +(p1::MPoly, p2::MPoly)
     r
 end
 
-function +{T,U}(p::MPoly{T}, s::U)
+function +(p::MPoly{T}, s::U) where {T,U}
     r = copy(convert(MPoly{promote_type(T,U)}, p))
     r[zeros(Int, nvars(p))] += s
     r
@@ -42,7 +42,7 @@ function -(p::MPoly, q::MPoly)
     r
 end
 
-function -{T,U}(p::MPoly{T}, s::U)
+function -(p::MPoly{T}, s::U) where {T,U}
     r = copy(convert(MPoly{promote_type(T, U)}, p))
     r[zeros(Int, nvars(p))] -= s
     r
@@ -70,7 +70,7 @@ function *(p1::MPoly, p2::MPoly)
     r
 end
 
-function *{T,U}(s::T, p::MPoly{U})
+function *(s::T, p::MPoly{U}) where {T,U}
     r = zero(MPoly{promote_type(T,U)}, vars=vars(p))
     for (m, c) in p
         r[m] = s * c
@@ -106,7 +106,7 @@ function ^(p::MPoly, power::Integer)
 end
 
 
-function /{T,U}(p::MPoly{T}, s::U)
+function /(p::MPoly{T}, s::U) where {T,U}
     r = zero(MPoly{promote_type(T,U)}, vars=vars(p))
     for (m, c) in p
         r[m] = c/s
@@ -124,7 +124,7 @@ function conj(p::MPoly)
 end
 
 
-function real{T<:Real}(p::MPoly{Complex{T}})
+function real(p::MPoly{Complex{T}}) where {T<:Real}
     r = zero(MPoly{T}, vars=vars(p))
     for (m, c) in p
         r[m] = real(c)
@@ -132,9 +132,9 @@ function real{T<:Real}(p::MPoly{Complex{T}})
     r
 end
 
-real{T<:Real}(p::MPoly{T}) = p
+real(p::MPoly{T}) where {T<:Real} = p
 
-function imag{T<:Real}(p::MPoly{Complex{T}})
+function imag(p::MPoly{Complex{T}}) where {T<:Real}
     r = zero(MPoly{T}, vars=vars(p))
     for (m, c) in p
         r[m] = imag(c)
@@ -142,4 +142,4 @@ function imag{T<:Real}(p::MPoly{Complex{T}})
     r
 end
 
-imag{T<:Real}(p::MPoly{T}) = zero(p)
+imag(p::MPoly{T}) where {T<:Real} = zero(p)

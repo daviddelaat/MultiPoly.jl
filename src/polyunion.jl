@@ -1,4 +1,4 @@
-immutable PolyUnion
+struct PolyUnion
     vars::Vector{Symbol}
     mat::Array{Int, 2}
     eltype::Type
@@ -6,10 +6,10 @@ end
 
 function PolyUnion(ps)
     newvars = isempty(ps) ? [] : union([vars(p) for p in ps]...)
-    mat = Array{Int}(length(newvars), length(ps))
+    mat = Array{Int}(undef, length(newvars), length(ps))
     for pindex = 1:length(ps)
         for i = 1:length(newvars)
-            mat[i, pindex] = findfirst(vars(ps[pindex]), newvars[i])
+            mat[i, pindex] = something(findfirst(isequal(newvars[i]), vars(ps[pindex])), 0)
         end
     end
     PolyUnion(newvars, mat, promote_type([eltype(p) for p in ps]...))
