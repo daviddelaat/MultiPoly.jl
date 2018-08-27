@@ -1,44 +1,44 @@
-immutable MPoly{T}
+struct MPoly{T}
     terms::OrderedDict{Vector{Int},T}
     vars::Vector{Symbol}
 end
 
 terms(p::MPoly) = p.terms
 
-eltype{T}(::MPoly{T}) = T
+eltype(::MPoly{T}) where {T}= T
 
 vars(p::MPoly) = p.vars
 
 nvars(p::MPoly) = length(vars(p))
 
-zero{T}(::Type{MPoly{T}}; vars::Vector{Symbol}=Symbol[]) = MPoly{T}(OrderedDict{Vector{Int},T}(), vars)
-zero{T}(p::MPoly{T}) = zero(MPoly{T}, vars=vars(p))
+zero(::Type{MPoly{T}}; vars::Vector{Symbol}=Symbol[]) where {T} = MPoly{T}(OrderedDict{Vector{Int},T}(), vars)
+zero(p::MPoly{T}) where {T} = zero(MPoly{T}, vars=vars(p))
 
-one{T}(::Type{MPoly{T}}; vars::Vector{Symbol}=Symbol[]) = MPoly{T}(OrderedDict(zeros(Int, length(vars)) => one(T)), vars)
-one{T}(p::MPoly{T}) = one(MPoly{T}, vars=vars(p))
+one(::Type{MPoly{T}}; vars::Vector{Symbol}=Symbol[]) where {T} = MPoly{T}(OrderedDict(zeros(Int, length(vars)) => one(T)), vars)
+one(p::MPoly{T}) where {T} = one(MPoly{T}, vars=vars(p))
 
-function generators{T}(::Type{MPoly{T}}, vars::Symbol...)
-     m = eye(Int, length(vars))
+function generators(::Type{MPoly{T}}, vars::Symbol...) where {T}
+    m = Matrix(I, length(vars), length(vars))
      [MPoly{T}(OrderedDict(m[:,i] => one(T)), [vars...]) for i = 1:length(vars)]
 end
 
-generator{T}(::Type{MPoly{T}}, var::Symbol) =
+generator(::Type{MPoly{T}}, var::Symbol) where {T} =
      MPoly{T}(OrderedDict([1] => one(T)), [var])
 
-@compat (::Type{MPoly{T}}){T}(var::Symbol) =
+MPoly{T}(var::Symbol) where {T} =
      MPoly{T}(OrderedDict([1] => one(T)), [var])
 
-@compat (::Type{MPoly})(var::Symbol) =
+MPoly(var::Symbol) =
      MPoly{Float64}(var)
 
-promote_rule{T,U}(::Type{MPoly{T}}, ::Type{MPoly{U}}) = MPoly{promote_type(T, U)}
-promote_rule{T,U}(::Type{MPoly{T}}, ::Type{U}) = MPoly{promote_type(T, U)}
+promote_rule(::Type{MPoly{T}}, ::Type{MPoly{U}}) where {T,U} = MPoly{promote_type(T, U)}
+promote_rule(::Type{MPoly{T}}, ::Type{U}) where {T,U} = MPoly{promote_type(T, U)}
 
-function convert{T}(P::Type{MPoly{T}}, p::MPoly{T})
+function convert(P::Type{MPoly{T}}, p::MPoly{T}) where {T}
     p
 end
 
-function convert{T}(P::Type{MPoly{T}}, p::MPoly)
+function convert(P::Type{MPoly{T}}, p::MPoly) where {T}
     r = zero(P, vars=vars(p))
     for (m, c) in p
         r[m] = convert(T, c)
@@ -46,32 +46,31 @@ function convert{T}(P::Type{MPoly{T}}, p::MPoly)
     r
 end
 
-convert{T}(::Type{MPoly{T}}, c::T) =
+convert(::Type{MPoly{T}}, c::T) where {T} =
     MPoly{T}(OrderedDict(Int[] => c))
 
 monomials(p::MPoly) = keys(terms(p))
 
-getindex{T}(p::MPoly{T}, m::Vector{Int}) =
+getindex(p::MPoly{T}, m::Vector{Int}) where {T} =
     get(terms(p), m, zero(T))
 
 getindex(p::MPoly, m::Int...) = p[[m...]]
 
-function setindex!{T}(p::MPoly{T}, v, m::Int...)
+function setindex!(p::MPoly{T}, v, m::Int...) where {T}
     v = convert(T, v)
-    if method_exists(isapprox, (T,T)) && isapprox(v, zero(T))
+    if hasmethod(isapprox, (T,T)) && isapprox(v, zero(T))
         delete!(terms(p), [m...])
     else
         terms(p)[[m...]] = v
     end
 end
 
-setindex!{T}(p::MPoly{T}, v, m::Vector{Int}) = p[m...] = v
+setindex!(p::MPoly{T}, v, m::Vector{Int}) where {T} = p[m...] = v
 
-start(p::MPoly) = start(terms(p))
-next(p::MPoly, state) = next(terms(p), state)
-done(p::MPoly, state) = done(terms(p), state)
+Base.iterate(p::MPoly) = iterate(terms(p))
+Base.iterate(p::MPoly, state) = iterate(terms(p), state)
 
-copy{T}(p::MPoly{T}) = MPoly{T}(copy(terms(p)), copy(vars(p)))
+copy(p::MPoly{T}) where {T} = MPoly{T}(copy(terms(p)), copy(vars(p)))
 
 function deg(p::MPoly)
     d = 0

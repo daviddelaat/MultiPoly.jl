@@ -23,7 +23,7 @@ function printmonomial(io::IO, m, vars)
     end
 end
 
-function print{T}(io::IO, p::MPoly{T})
+function print(io::IO, p::MPoly{T}) where {T}
     first = true
     for (m, c) in p
         if first

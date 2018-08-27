@@ -1,4 +1,4 @@
-function evaluate{T}(p::MPoly{T}, es...)
+function evaluate(p::MPoly{T}, es...) where {T}
     r = zero(T)
     for (m, c) in p
         t = c
@@ -10,8 +10,8 @@ function evaluate{T}(p::MPoly{T}, es...)
     r
 end
 
-function evaluate_basis{T}(p::MPoly{T}, es...)
-    r = Array(T, 0)
+function evaluate_basis(p::MPoly{T}, es...) where {T}
+    r = Array{T}(undef, 0)
     for (m, c) in p
         r1 = c
         for i = 1:length(m)

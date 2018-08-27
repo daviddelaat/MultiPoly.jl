@@ -15,7 +15,7 @@ Pkg.add("MultiPoly")
 
 Multivariate polynomials are stored in the type
 ```julia
-immutable MPoly{T}
+struct MPoly{T}
     terms::OrderedDict{Vector{Int},T}
     vars::Vector{Symbol}
 end
